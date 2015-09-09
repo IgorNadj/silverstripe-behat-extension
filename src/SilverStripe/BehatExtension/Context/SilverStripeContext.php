@@ -508,8 +508,6 @@ EOS;
 	 * to the wrong base path, e.g. "http://localhost/", which will then probably generate
 	 * a apache 404 response, which is pretty standard and we can detect it and give a better
 	 * error message.
-	 *
-	 * @see visitUnsafe - if you want to test an apache 404 response
 	 */
 	public function visit($page){
 		parent::visit($page);
@@ -518,18 +516,7 @@ EOS;
 		// but that is not quite possible yet, so this is the best we can do.
 		$page = $this->getSession()->getPage();
 		$title = $page->find('css', 'title')->getHtml(); // getText returns empty string, so have to use getHtml
-		$currentUrl = $this->getSession()->getCurrentUrl();
-		assertNotEquals('404 Not Found', $title, 'A 404 response was detected from the server. If you intended to test an apache 404 response, use visitUnsafe()');
+		assertNotEquals('404 Not Found', $title, 'A 404 response was detected from the server. If you intended to test an apache 404 response, please write a specific 404 test step.');
 	}
 	
-	/**
-	 * Like visit, but does not do safety checks.
-	 *
-	 * @Given /^(?:|I )am on "(?P<page>[^"]+)" unsafely$/
-	 * @When /^(?:|I )go to "(?P<page>[^"]+)" unsafely$/
-	 */
-	public function visitUnsafe($page){
-		parent::visit($page);
-	}
-
 }
