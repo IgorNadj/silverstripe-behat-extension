@@ -411,26 +411,16 @@ JS;
      * @Given /^I confirm the dialog$/
      */
 	public function iConfirmTheDialog() {
-		try{
-			$this->getSession()->getDriver()->getWebDriverSession()->accept_alert();
-			$this->handleAjaxTimeout();
-		}catch(\WebDriver\Exception $e){
-			// have to catch and log somehow else otherwise behat result parsing fails
-			assertTrue(false, 'Dialog bug: '.$e->getMessage());
-		}
+		$this->getSession()->getDriver()->getWebDriverSession()->accept_alert();
+		$this->handleAjaxTimeout();
     }
 
     /**
      * @Given /^I dismiss the dialog$/
      */
 	public function iDismissTheDialog() {
-		try{
-			$this->getSession()->getDriver()->getWebDriverSession()->dismiss_alert();
-			$this->handleAjaxTimeout();
-        }catch(\WebDriver\Exception $e){
-        	// have to catch and log somehow else otherwise behat result parsing fails
-        	assertTrue(false, 'Dialog bug: '.$e->getMessage());
-        }
+		$this->getSession()->getDriver()->getWebDriverSession()->dismiss_alert();
+		$this->handleAjaxTimeout();
     }
 
     /**
@@ -982,7 +972,7 @@ JS;
 	 * We have to catch exceptions and log somehow else otherwise behat falls over
 	 */
 	protected function logException($e){
-		file_put_contents('php://stderr', 'Exception caught: '.$e->getMessage());
+		file_put_contents('php://stderr', 'Exception caught: '.$e);
 	}
 	
 }
